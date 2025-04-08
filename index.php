@@ -1,3 +1,5 @@
 <?php
 
-echo "<h1>Welcome to the Home Page</h1>";
+require './modules/employees/show.php';
+
+echo "<h1>Welcome to Payroll Managment System</h1>";

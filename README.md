@@ -30,8 +30,8 @@ The system uses a well-structured relational database with the following tables:
 ## 📜 Installation & Setup  
 1. Clone the repository:  
    ```sh
-   git clone https://github.com/your-username/payroll-management-system.git
-   cd payroll-management-system
+   git clone https://github.com/IsaacVic-Dark/Payroll-System.git
+   cd Payroll-System
    ```  
 2. Set up the database (`MySQL` or `PostgreSQL`).  
 3. Run migrations to create tables.  
@@ -39,6 +39,3 @@ The system uses a well-structured relational database with the following tables:
 
 ## 🤝 Contributing  
 Contributions are welcome! Feel free to open an issue or submit a pull request.  
-
-## 📄 License  
-This project is licensed under the **MIT License**.  
