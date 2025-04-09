@@ -12,7 +12,7 @@ $pass = $_ENV['DB_PASS'];
 $port = $_ENV['PORT'];
 
 
-$dsn = "mysql:host=$host;port=$port;dbname=$dbname;user=$user;charset=utf8mb4";
+$dsn = "mysql:host=$host;port=$port;dbname=$dbname;user=$user;password=$pass;charset=utf8mb4";
 
 $pdo = new PDO($dsn);
 
@@ -20,8 +20,6 @@ $stm = $pdo->prepare("SELECT * FROM employees");
 $stm->execute();
 
 $employees = $stm->fetchAll(PDO::FETCH_ASSOC);
-
-// var_dump($employees);
 
 foreach ($employees as $employee) {
     echo "<h1>{$employee['FirstName']}</h1>";
