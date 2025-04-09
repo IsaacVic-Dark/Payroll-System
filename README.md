@@ -12,10 +12,8 @@ The **Payroll Management System** is a comprehensive solution for handling emplo
 - 🎁 **Benefits Management** – Manage employee benefits such as medical and travel allowances.  
 
 ## 🛠 Tech Stack  
-- **Database**: MySQL / PostgreSQL  
-- **Backend**: PHP (Laravel) / Node.js (Express)  
-- **Frontend**: React / Vue.js  
-- **Containerization**: Docker (optional)  
+- **Database**: MySQL / PDO  
+- **Backend**: PHP 
 
 ## 🗄 Database Schema  
 The system uses a well-structured relational database with the following tables:  
