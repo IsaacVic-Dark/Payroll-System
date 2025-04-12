@@ -10,41 +10,46 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+
         .payroll-chart {
             height: 200px;
             width: 100%;
             display: flex;
             align-items: flex-end;
         }
+
         .chart-bar {
             flex: 1;
             margin: 0 4px;
             border-radius: 6px 6px 0 0;
             background: linear-gradient(180deg, #7c3aed 0%, #a78bfa 100%);
         }
+
         .progress-bar {
             height: 8px;
             border-radius: 4px;
             background: #eee;
         }
+
         .progress-fill {
             height: 100%;
             border-radius: 4px;
         }
     </style>
 </head>
-<body>  
-    
-    <?php require 'resources/components/nav.view.php'; ?>
 
+<body>
+    <div class="min-h-screen flex flex-col">
+        <!-- Desktop Layout -->
+        <div class="hidden lg:flex h-screen">
+            <?php require 'resources/components/nav.view.php'; ?>
+        </div>
+    </div>
     <!-- <form method="POST" action="routes/api.php">
         <button type="submit" name="action" value="add_employee">Add employee</button>
         <button type="submit" name="action" value="add_payroll">Add payroll</button>
     </form> -->
 </body>
+
 </html>
-<?php
 
-// require './modules/employees/show.php';
-
-echo "<h1>Welcome to Payroll Managment System</h1>";

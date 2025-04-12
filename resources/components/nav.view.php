@@ -5,7 +5,7 @@
             <div class="w-8 h-8 bg-indigo-500 rounded flex items-center justify-center text-white mr-2">
                 <i class="fas fa-paper-plane transform rotate-45"></i>
             </div>
-            <span class="text-xl font-semibold">PayTide</span>
+            <span class="text-xl font-semibold">Payroll system</span>
         </div>
     </div>
 
@@ -17,58 +17,13 @@
                     <span>Dashboard</span>
                 </a>
             </li>
+            <form method="POST" action="routes/api.php">
+                <button type="submit" name="action" value="load_employee_view">Employees</button>
+            </form>
             <li>
                 <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100">
                     <i class="fas fa-users w-5 text-gray-500 mr-3"></i>
                     <span>All Employees</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100">
-                    <i class="fas fa-tasks w-5 text-gray-500 mr-3"></i>
-                    <span>Checklist</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center px-4 py-3 bg-indigo-50 text-indigo-600 border-l-4 border-indigo-600">
-                    <i class="fas fa-money-bill-wave w-5 text-indigo-600 mr-3"></i>
-                    <span>Payroll</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100">
-                    <i class="fas fa-chart-line w-5 text-gray-500 mr-3"></i>
-                    <span>Expenses Analytics</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100">
-                    <i class="fas fa-file-invoice w-5 text-gray-500 mr-3"></i>
-                    <span>Tax Advice</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100">
-                    <i class="fas fa-calculator w-5 text-gray-500 mr-3"></i>
-                    <span>Accounting</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100">
-                    <i class="fas fa-user-plus w-5 text-gray-500 mr-3"></i>
-                    <span>Recruitment</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100">
-                    <i class="fas fa-cog w-5 text-gray-500 mr-3"></i>
-                    <span>Settings</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100">
-                    <i class="fas fa-headset w-5 text-gray-500 mr-3"></i>
-                    <span>Help & Support</span>
                 </a>
             </li>
         </ul>
@@ -96,30 +51,45 @@
         </a>
     </div>
 </div>
-<!-- Header -->
-<header class="bg-white border-b border-gray-200 flex items-center justify-between px-6 py-3">
-    <div class="relative w-80">
-        <input type="text" class="w-full pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Search something here">
-        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-    </div>
-
-    <div class="flex items-center">
-        <div class="mr-4 relative">
-            <button class="relative">
-                <i class="fas fa-bell text-gray-500"></i>
-                <span class="absolute -top-1 -right-1 bg-indigo-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">1</span>
-            </button>
+<div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 flex items-center justify-between px-6 py-3">
+        <div class="relative w-80">
+            <input type="text" class="w-full pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Search something here">
+            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
         </div>
 
         <div class="flex items-center">
-            <img src="/api/placeholder/40/40" alt="Profile" class="w-8 h-8 rounded-full mr-2">
-            <div>
-                <p class="text-sm font-semibold">Brian F</p>
-                <p class="text-xs text-gray-500">brianf@gmail.com</p>
+            <div class="mr-4 relative">
+                <button class="relative">
+                    <i class="fas fa-bell text-gray-500"></i>
+                    <span class="absolute -top-1 -right-1 bg-indigo-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">1</span>
+                </button>
             </div>
-            <i class="fas fa-chevron-down ml-2 text-gray-400"></i>
-        </div>
-    </div>
-</header>
 
-<?php
+            <div class="flex items-center">
+                <img src="/api/placeholder/40/40" alt="Profile" class="w-8 h-8 rounded-full mr-2">
+                <div>
+                    <p class="text-sm font-semibold">Brian F</p>
+                    <p class="text-xs text-gray-500">brianf@gmail.com</p>
+                </div>
+                <i class="fas fa-chevron-down ml-2 text-gray-400"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Content Area -->
+    <main class="flex-1 overflow-y-auto p-6 bg-white">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">Hi, PayTide Studio</h1>
+                <p class="text-gray-500">Manage your Payroll with our system</p>
+            </div>
+
+            <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md flex items-center">
+                Create Employee
+                <i class="fas fa-plus ml-2"></i>
+            </button>
+        </div>
+    </main>
+</div>
+
