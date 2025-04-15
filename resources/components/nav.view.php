@@ -17,8 +17,8 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            <form method="POST" action="routes/api.php">
-                <button type="submit" name="action" value="load_employee_view">Employees</button>
+            <form method="POST" action="">
+                <button type="submit" name="action" value="load_employee_view" id="employee_btn">Employees</button>
             </form>
             <li>
                 <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100">
@@ -92,4 +92,11 @@
         </div>
     </main>
 </div>
+
+<?php 
+    if(isset($_POST["action"]) && $_POST["action"] == "load_employee_view"){
+        require __DIR__ . "/../layouts/employees.view.php";
+    }
+?>
+
 
