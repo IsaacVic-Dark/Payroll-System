@@ -1,11 +1,26 @@
 <?php
 
 require 'C:\laragon\www\payroll_system\modules\employees\show.php';
+require 'C:\laragon\www\payroll_system\modules\leave\controller.php';
 require 'C:\laragon\www\payroll_system\modules\deductions\tax.php';
 
 $employee = fetchEmployeeById($pdo, $_GET['id']);
 
 $deductions = calculateNetPay(basicSalary: $employee['Salary']);
+
+$employeeId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+$leaves = getEmployeeLeaves($pdo, $employeeId);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['leave_id'])) {
+    $leaveId = (int)$_POST['leave_id'];
+    $status = $_POST['action']; 
+
+    alterLeaves($pdo, $leaveId, $status);
+
+    header("Location: " . $_SERVER['REQUEST_URI']);
+    exit();
+}
 
 echo "<h1>Employee Profile</h1>";
 echo "<p><strong>Name:</strong> " . htmlspecialchars($employee['FirstName']) . "</p>";
@@ -26,4 +41,29 @@ echo "<p><strong>Income Tax:</strong> " . $deductions['taxBeforeRelief'] . "</p>
 echo "<p><strong>Personal Relief:</strong> " . $deductions['personalRelief'] . "</p>";
 echo "<p><strong>PAYE:</strong> " . $deductions['paye'] . "</p>";
 echo "<p><strong>Net Pay:</strong> " . $deductions['netPay'] . "</p>";
+
 ?>
+
+<h3>Leave Applications</h3>
+
+<?php if (!empty($leaves)): ?>
+    <ul>
+        <?php foreach ($leaves as $leave): ?>
+            <li>
+                Type: <?= htmlspecialchars($leave['LeaveType']) ?> |
+                Start date: <?= htmlspecialchars($leave['StartDate']) ?> |
+                End date: <?= htmlspecialchars($leave['EndDate']) ?> |
+                Status: <?= htmlspecialchars($leave['Status']) ?> 
+
+                <form action="" method="POST" style="display:inline;">
+                    <input type="hidden" name="leave_id" value="<?= htmlspecialchars($leave['LeaveID']) ?>">
+                    <button type="submit" name="action" value="Approved">Approve</button>
+                    <button type="submit" name="action" value="Rejected">Reject</button>
+                </form>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php else: ?>
+    <p>No leave applications found for this employee.</p>
+<?php endif; ?>
+
