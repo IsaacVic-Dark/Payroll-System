@@ -81,11 +81,11 @@ function updateEmployee($pdo, $id, $employeeDetail)
     BankAccountNumber = :BankAccountNumber, TaxID = :TaxID
     WHERE EmployeeID = :id");
 
-    $stmt->execute([
-        ':FirstName' => $employeeDetail['FirstName'],
-        ':LastName' => $employeeDetail['LastName'],
-        ':Email' => $employeeDetail['Email'],
-        ':Phone' => $employeeDetail['Phone'],
+$stmt->execute([
+    ':FirstName' => $employeeDetail['FirstName'],
+    ':LastName' => $employeeDetail['LastName'],
+    ':Email' => $employeeDetail['Email'],
+    ':Phone' => $employeeDetail['Phone'],
         ':HireDate' => $employeeDetail['HireDate'],
         ':JobTitle' => $employeeDetail['JobTitle'],
         ':Department' => $employeeDetail['Department'],
@@ -95,3 +95,5 @@ function updateEmployee($pdo, $id, $employeeDetail)
         ':id' => $id 
     ]);
 }
+
+
