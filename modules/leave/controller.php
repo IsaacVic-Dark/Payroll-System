@@ -3,6 +3,21 @@
 require 'C:\laragon\www\payroll_system\db\db.php';
 
 /**
+ * Leave controller
+ * Summary of fetchAllLeaves
+ * @param mixed $pdo
+ * @return array
+ */
+function fetchAllLeaves($pdo) {
+
+    $stmt = $pdo->prepare("SELECT l.*, e.FirstName, e.LastName FROM leaves AS l JOIN employees AS e ON l.EmployeeID = e.EmployeeID");
+    $stmt->execute();
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+/**
  * Admin leave controller
  * Summary of getEmployeeLeaves
  * @param mixed $pdo
@@ -37,12 +52,35 @@ function applyLeaveByID($pdo, $leaveApplication){
             :EmployeeID, :LeaveType, :StartDate, :EndDate, :Status
         )");
 
-    $stmt->execute([
-        ':EmployeeID' => $leaveApplication['id'],
-        ':LeaveType' => $leaveApplication['LeaveType'],
-        ':StartDate' => $leaveApplication['StartDate'],
-        ':EndDate' => $leaveApplication['EndDate'],
-        ':Status' => $leaveApplication['Status'],
-    ]);
+$stmt->execute([
+    ':EmployeeID' => $leaveApplication['id'],
+    ':LeaveType' => $leaveApplication['LeaveType'],
+    ':StartDate' => $leaveApplication['StartDate'],
+    ':EndDate' => $leaveApplication['EndDate'],
+    ':Status' => $leaveApplication['Status'],
+]);
 
 }
+
+function checkLeaveStatus($pdo, $id) {
+    $stmt = $pdo->prepare("SELECT Status FROM leaves WHERE EmployeeID = :id ORDER BY LeaveID DESC LIMIT 1");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $status = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$status) {
+        return "No leave application found.";
+    }
+
+    switch ($status['Status']) {
+        case 'Pending':
+            return "Leave application is awaiting HR action.";
+        case 'aAccepted':
+            return "Your leave application has been accepted.";
+        case 'Rejected':
+            return "Your leave application has been rejected.";
+        default:
+            return "Unknown leave status.";
+    }
+}
+

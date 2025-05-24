@@ -4,7 +4,7 @@ require_once 'C:\laragon\www\payroll_system\db\db.php';
 require_once 'C:\laragon\www\payroll_system\modules\employees\show.php';
 require_once 'C:\laragon\www\payroll_system\modules\leave\controller.php';
 
-$id = 10;
+$id = 18;
 
 $employee = fetchEmployeeById($pdo, $id);
 
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'leave') {
 
         $leaveApplication= [
-            "id" => 10,
+            "id" => $id,
             "LeaveType" => $_POST['leaveType'],
             "StartDate" => $_POST['StartDate'],
             "EndDate" => $_POST['EndDate'],
@@ -23,8 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         header("Location: /resources/layouts/profile_employee.php");
         exit();
+    }elseif($_POST['action'] === 'edit'){
+        header("Location: edit_employee.php?id=$id");
+        exit();
     }
 }
+
 
 ?>
 
@@ -40,6 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 <p><strong>Salary:</strong> <?= number_format($employee['Salary'], 2) ?></p>
 <p><strong>Bank Account Number:</strong> <?= $employee['BankAccountNumber'] ?></p>
 <p><strong>Tax ID:</strong> <?= $employee['TaxID'] ?></p>
+
+<form action="" method="POST">
+    <button type="submit" name="action" value="edit">Edit</button>
+    <button type="submit" name="action" value="advance">Salary advance</button>
+</form>
 
 <h2>Leave application</h2>
 <form action="" method="POST">
@@ -58,3 +67,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     <input type="hidden" name="Status" value="pending">
     <button type="submit" name="action" value="leave">Apply for a leave</button>
 </form>
+
+<p><?= htmlspecialchars(checkLeaveStatus($pdo, $id)) ?></p>

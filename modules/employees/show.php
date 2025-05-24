@@ -96,4 +96,8 @@ $stmt->execute([
     ]);
 }
 
-
+function countEmployees($pdo)
+{
+    $stmt = $pdo->query("SELECT COUNT(*) FROM employees");
+    return $stmt->fetchColumn();
+}
