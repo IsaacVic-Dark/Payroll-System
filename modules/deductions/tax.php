@@ -82,7 +82,6 @@ function calculateNSSF($salary) {
 }
 
 function calculateProgressiveTax($taxableIncome) {
-    // Define tax brackets (as of 2025)
     $taxBrackets = [
         ['limit' => 24000, 'rate' => 0.10],
         ['limit' => 8333, 'rate' => 0.25],

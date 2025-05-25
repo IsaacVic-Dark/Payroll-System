@@ -1,10 +1,9 @@
 <?php
 
 require __DIR__ . '../../../modules/leave/controller.php';
-require __DIR__ . '../../../modules/employees/show.php';
+require __DIR__ . '../../../modules/employees/controller.php';
 
 $leaves = fetchAllLeaves($pdo);
-// $employeeDetails = fetchAllEmployees($pdo, $leaves[0]['EmployeeID']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['leave_id'])) {
     $leaveId = (int)$_POST['leave_id'];
@@ -43,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['lea
 
 <table border="1" cellpadding="8" cellspacing="0">
     <tr>
-        <!-- <th>First Name</th> -->
         <th>Name</th>
         <th>Leave Type</th>
         <th>StartDate</th>

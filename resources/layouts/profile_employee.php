@@ -1,8 +1,8 @@
 <?php
 
-require_once 'C:\laragon\www\payroll_system\db\db.php';
-require_once 'C:\laragon\www\payroll_system\modules\employees\show.php';
-require_once 'C:\laragon\www\payroll_system\modules\leave\controller.php';
+require __DIR__ . '../../../db/db.php';
+require __DIR__ . '../../../modules/employees/controller.php';
+require __DIR__ . '../../../modules/leave/controller.php';
 
 $id = 18;
 

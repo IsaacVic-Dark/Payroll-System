@@ -1,7 +1,7 @@
 <?php 
 echo "<h1>Employees</h1>";
 
-require 'C:\laragon\www\payroll_system\modules\employees\show.php';
+require __DIR__ . '../../../modules/employees/controller.php';
 
 $employees = [];
 
@@ -50,6 +50,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <tr>
         <th>First Name</th>
         <th>Job Title</th>
+        <th>Department</th>
         <th>Salary</th>
         <th>Action</th>
     </tr>
@@ -59,6 +60,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             <tr onclick="window.location='employee_profile.php?id=<?= $employee['EmployeeID'] ?>'" style="cursor: pointer;">
                 <td><?= htmlspecialchars($employee['FirstName']) ?></td>
                 <td><?= htmlspecialchars($employee['JobTitle']) ?></td>
+                <td><?= htmlspecialchars($employee['Department']) ?></td>
                 <td><?= htmlspecialchars($employee['Salary']) ?></td>
                 <td style="display: flex; gap: 10px;">
                     <form action="employees.php" method="POST">

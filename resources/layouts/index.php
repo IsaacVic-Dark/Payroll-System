@@ -1,10 +1,10 @@
 <?php 
 echo "<h1>Home Page</h1>";
 
-// require 'C:\laragon\www\payroll_system\modules\employees\show.php';
-require 'C:\laragon\www\payroll_system\db\db.php';
+require __DIR__ . '../../../db/db.php';
 
 $countEmployees = $pdo->query("SELECT COUNT(*) FROM employees")->fetchColumn();
+$countLeaves = $pdo->query("SELECT COUNT(*) FROM leaves")->fetchColumn();
 
 ?>
 
@@ -15,3 +15,4 @@ $countEmployees = $pdo->query("SELECT COUNT(*) FROM employees")->fetchColumn();
 </form>
 
 <h1>Employees: <?=$countEmployees?></h1>
+<h1>Leave applications: <?=$countLeaves?></h1>

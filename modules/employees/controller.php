@@ -1,7 +1,6 @@
 <?php
 
-require 'C:\laragon\www\payroll_system\db\db.php';
-// require 'C:\laragon\www\payroll_system\modules\leave\controller.php';
+require __DIR__ . '../../../db/db.php';
 
 function fetchAllEmployees($pdo)
 {

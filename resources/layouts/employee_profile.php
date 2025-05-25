@@ -1,8 +1,8 @@
 <?php
 
-require 'C:\laragon\www\payroll_system\modules\employees\show.php';
-require 'C:\laragon\www\payroll_system\modules\leave\controller.php';
-require 'C:\laragon\www\payroll_system\modules\deductions\tax.php';
+require __DIR__ . '../../../modules/employees/controller.php';
+require __DIR__ . '../../../modules/leave/controller.php';
+require __DIR__ . '../../../modules/deductions/tax.php';
 
 $employee = fetchEmployeeById($pdo, $_GET['id']);
 
