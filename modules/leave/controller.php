@@ -2,19 +2,38 @@
 
 require 'C:\laragon\www\payroll_system\db\db.php';
 
+require_once __DIR__ . '../../../helper/helper.php';
+
+
 /**
  * Leave controller
  * Summary of fetchAllLeaves
  * @param mixed $pdo
  * @return array
  */
-function fetchAllLeaves($pdo) {
 
-    $stmt = $pdo->prepare("SELECT l.*, e.FirstName, e.LastName FROM leaves AS l JOIN employees AS e ON l.EmployeeID = e.EmployeeID");
+
+function fetchAllLeaves($pdo) {
+    $pagination = PaginationHelper::getPagination([
+        'pdo' => $pdo,
+        'table' => 'leaves',
+        'limit' => 5, 
+    ]);
+
+    $stmt = $pdo->prepare("SELECT l.*, e.FirstName, e.LastName 
+                           FROM leaves AS l 
+                           JOIN employees AS e ON l.EmployeeID = e.EmployeeID 
+                           LIMIT :limit OFFSET :offset");
+    
+    $stmt->bindValue(':limit', $pagination['limit'], PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $pagination['offset'], PDO::PARAM_INT);
     $stmt->execute();
     
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $leaves = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return [$leaves, $pagination['totalPages'], $pagination['page']];
 }
+
 
 
 /**

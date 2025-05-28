@@ -15,6 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['lea
     exit();
 }
 
+[$leaves, $totalPages, $currentPage] = fetchAllLeaves($pdo);
+
 ?>
 
 <h2>Leave Managment</h2>
@@ -73,3 +75,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['lea
         </tr>
     <?php endif; ?>
 </table>
+
+<!-- Pagination Links -->
+<div style="margin-top:20px;">
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <a href="?page=<?= $i ?>" style="margin: 0 5px; <?= $i === $page ? 'font-weight: bold;' : '' ?>">
+            <?= $i ?>
+        </a>
+    <?php endfor; ?>
+</div>

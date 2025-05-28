@@ -2,23 +2,24 @@
 
 require __DIR__ . '../../../db/db.php';
 
+require_once __DIR__ . '../../../helper/helper.php';
+
+
 function fetchAllEmployees($pdo)
 {
-    $limit = 5;
-    $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
-    $offset = ($page - 1) * $limit;
-
-    $totalStmt = $pdo->query("SELECT COUNT(*) FROM employees");
-    $totalEmployees = $totalStmt->fetchColumn();
-    $totalPages = ceil($totalEmployees / $limit);
+    $pagination = PaginationHelper::getPagination([
+        'pdo' => $pdo,
+        'table' => 'employees',
+        'limit' => 5,
+    ]);
 
     $stmt = $pdo->prepare("SELECT * FROM employees LIMIT :limit OFFSET :offset");
-    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->bindValue(':limit', $pagination['limit'], PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $pagination['offset'], PDO::PARAM_INT);
     $stmt->execute();
     $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    return [$employees, $totalPages, $page];
+    return [$employees, $pagination['totalPages'], $pagination['page']];
 }
 
 function fetchEmployeeById($pdo, $id)

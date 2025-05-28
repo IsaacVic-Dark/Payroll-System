@@ -18,7 +18,6 @@ if (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) {
     }
 } else {
     [$employees, $totalPages, $currentPage] = fetchAllEmployees($pdo);
-
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -52,29 +51,31 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <th>Job Title</th>
         <th>Department</th>
         <th>Salary</th>
+        <th>Status</th>
         <th>Action</th>
     </tr>
     
     <?php if (!empty($employees)): ?>
-        <?php foreach ($employees as $employee): ?>
-            <tr onclick="window.location='employee_profile.php?id=<?= $employee['EmployeeID'] ?>'" style="cursor: pointer;">
-                <td><?= htmlspecialchars($employee['FirstName']) ?></td>
-                <td><?= htmlspecialchars($employee['JobTitle']) ?></td>
-                <td><?= htmlspecialchars($employee['Department']) ?></td>
-                <td><?= htmlspecialchars($employee['Salary']) ?></td>
-                <td style="display: flex; gap: 10px;">
-                    <form action="employees.php" method="POST">
-                        <input type="text" name="id" value="<?= $employee['EmployeeID'] ?>" hidden>
-                        <button type="submit" name="action" value="edit">Edit</button>
-                    </form>
-                    <form action="employees.php" method="POST">
-                        <input type="text" name="id" value="<?= $employee['EmployeeID'] ?>" hidden>
-                        <button type="submit" name="action" value="delete">Delete</button>
-                    </form>
-                </td>
-            </tr>
+            <?php foreach ($employees as $employee): ?>
+                <tr onclick="window.location='employee_profile.php?id=<?= $employee['EmployeeID'] ?>'" style="cursor: pointer;">
+                    <td><?= htmlspecialchars($employee['FirstName']) ?></td>
+                    <td><?= htmlspecialchars($employee['JobTitle']) ?></td>
+                    <td><?= htmlspecialchars($employee['Department']) ?></td>
+                    <td><?= htmlspecialchars($employee['Salary']) ?></td>
+                    <td><?= htmlspecialchars($employee['Salary']) ?></td>
+                    <td style="display: flex; gap: 10px;">
+                        <form action="employees.php" method="POST">
+                            <input type="text" name="id" value="<?= $employee['EmployeeID'] ?>" hidden>
+                            <button type="submit" name="action" value="edit">Edit</button>
+                        </form>
+                        <form action="employees.php" method="POST">
+                            <input type="text" name="id" value="<?= $employee['EmployeeID'] ?>" hidden>
+                            <button type="submit" name="action" value="delete">Delete</button>
+                        </form>
+                    </td>
+                </tr>
             <?php endforeach; ?>
-            <?php else: ?>
+        <?php else: ?>
         <tr>
             <td colspan="3">No matching employees found.</td>
         </tr>
@@ -87,5 +88,5 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <a href="?page=<?= $i ?>" style="margin: 0 5px; <?= $i === $page ? 'font-weight: bold;' : '' ?>">
             <?= $i ?>
         </a>
-        <?php endfor; ?>
-    </div>
+    <?php endfor; ?>
+</div>
