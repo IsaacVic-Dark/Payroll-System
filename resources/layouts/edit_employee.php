@@ -3,6 +3,8 @@
 require __DIR__ . '../../../db/db.php';
 require __DIR__ . '../../../modules/employees/controller.php';
 
+include __DIR__ . '../../components/nav.php';
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'edit') {
     $employeeDetail = [

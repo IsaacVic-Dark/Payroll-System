@@ -1,6 +1,16 @@
 CREATE DATABASE PayrollSystem;
 USE PayrollSystem;
 
+-- Users table
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(50) UNIQUE NOT NULL,
+    PasswordHash VARCHAR(255) NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    UserType ENUM('user', 'admin', 'super_admin') DEFAULT 'user',
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Employees table
 CREATE TABLE Employees (
     EmployeeID INT AUTO_INCREMENT PRIMARY KEY,
@@ -27,7 +37,7 @@ CREATE TABLE Payroll (
     OvertimePay DECIMAL(10,2) DEFAULT 0.00,
     Bonuses DECIMAL(10,2) DEFAULT 0.00,
     Deductions DECIMAL(10,2) DEFAULT 0.00,
-    NetSalary DECIMAL(10,2) GENERATED ALWAYS AS (BaseSalary + OvertimePay + Bonuses - Deductions) STORED,
+    NetSalary DECIMAL(10,2) DEFAULT 0.00,
     PaymentStatus ENUM('Pending', 'Paid') DEFAULT 'Pending',
     PaymentDate DATE,
     FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID) ON DELETE CASCADE

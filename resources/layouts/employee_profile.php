@@ -1,8 +1,12 @@
 <?php
 
+echo "<h2>Employee Profile</h2>";
+
 require __DIR__ . '../../../modules/employees/controller.php';
 require __DIR__ . '../../../modules/leave/controller.php';
 require __DIR__ . '../../../modules/deductions/tax.php';
+
+include __DIR__ . '../../components/nav.php';
 
 $employee = fetchEmployeeById($pdo, $_GET['id']);
 
@@ -22,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['lea
     exit();
 }
 
-echo "<h1>Employee Profile</h1>";
 echo "<p><strong>Name:</strong> " . htmlspecialchars($employee['FirstName']) . "</p>";
 echo "<p><strong>Job Title:</strong> " . htmlspecialchars($employee['JobTitle']) . "</p>";
 echo "<p><strong>Department:</strong> " . htmlspecialchars($employee['Department']) . "</p>";

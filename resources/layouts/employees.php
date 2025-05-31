@@ -1,7 +1,9 @@
 <?php 
-echo "<h1>Employees</h1>";
+echo "<h2>Employees</h2>";
 
 require __DIR__ . '../../../modules/employees/controller.php';
+
+include __DIR__ . '../../components/nav.php';
 
 $employees = [];
 
@@ -62,7 +64,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <td><?= htmlspecialchars($employee['JobTitle']) ?></td>
                     <td><?= htmlspecialchars($employee['Department']) ?></td>
                     <td><?= htmlspecialchars($employee['Salary']) ?></td>
-                    <td><?= htmlspecialchars($employee['Salary']) ?></td>
+                    <td><?= htmlspecialchars($employee['PaymentStatus']) ?></td>
                     <td style="display: flex; gap: 10px;">
                         <form action="employees.php" method="POST">
                             <input type="text" name="id" value="<?= $employee['EmployeeID'] ?>" hidden>

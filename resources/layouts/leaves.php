@@ -1,7 +1,11 @@
 <?php
 
+echo"<h2>Leave Managment</h2>";
+
 require __DIR__ . '../../../modules/leave/controller.php';
 require __DIR__ . '../../../modules/employees/controller.php';
+
+include __DIR__ . '../../components/nav.php';
 
 $leaves = fetchAllLeaves($pdo);
 
@@ -19,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['lea
 
 ?>
 
-<h2>Leave Managment</h2>
+
 
 <form action="" method="POST">
     <input type="text" name="name" placeholder="Enter employee name">

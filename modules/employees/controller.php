@@ -1,9 +1,7 @@
 <?php
 
 require __DIR__ . '../../../db/db.php';
-
 require_once __DIR__ . '../../../helper/helper.php';
-
 
 function fetchAllEmployees($pdo)
 {
@@ -13,7 +11,7 @@ function fetchAllEmployees($pdo)
         'limit' => 5,
     ]);
 
-    $stmt = $pdo->prepare("SELECT * FROM employees LIMIT :limit OFFSET :offset");
+    $stmt = $pdo->prepare("SELECT e.*, p.PaymentStatus FROM employees AS e JOIN payroll AS p ON p.EmployeeID = e.EmployeeID LIMIT :limit OFFSET :offset");
     $stmt->bindValue(':limit', $pagination['limit'], PDO::PARAM_INT);
     $stmt->bindValue(':offset', $pagination['offset'], PDO::PARAM_INT);
     $stmt->execute();
@@ -50,18 +48,27 @@ function deleteEmployeeByID($pdo, $id)
 
 function addEmployee($pdo, $employeeDetail)
 {
+    // 1. Generate Email and Password
+    $domain = 'payroll.com';
+    $firstName = strtolower($employeeDetail['FirstName']);
+    $lastName = strtolower($employeeDetail['LastName']);
+    $generatedEmail = "{$firstName}.{$lastName}@{$domain}";
+    $rawPassword = "payroll@{$firstName}";
+    $hashedPassword = password_hash($rawPassword, PASSWORD_BCRYPT);
+
+    // 2. Insert into Employees (with generated email)
     $stmt = $pdo->prepare("INSERT INTO Employees (
-            FirstName, LastName, Email, Phone, HireDate, 
-            JobTitle, Department, Salary, BankAccountNumber, TaxID
-        ) VALUES (
-            :FirstName, :LastName, :Email, :Phone, :HireDate,
-            :JobTitle, :Department, :Salary, :BankAccountNumber, :TaxID
-        )");
+        FirstName, LastName, Email, Phone, HireDate, 
+        JobTitle, Department, Salary, BankAccountNumber, TaxID
+    ) VALUES (
+        :FirstName, :LastName, :Email, :Phone, :HireDate,
+        :JobTitle, :Department, :Salary, :BankAccountNumber, :TaxID
+    )");
 
     $stmt->execute([
         ':FirstName' => $employeeDetail['FirstName'],
         ':LastName' => $employeeDetail['LastName'],
-        ':Email' => $employeeDetail['Email'],
+        ':Email' => $generatedEmail, 
         ':Phone' => $employeeDetail['Phone'],
         ':HireDate' => $employeeDetail['HireDate'],
         ':JobTitle' => $employeeDetail['JobTitle'],
@@ -69,6 +76,41 @@ function addEmployee($pdo, $employeeDetail)
         ':Salary' => $employeeDetail['Salary'],
         ':BankAccountNumber' => $employeeDetail['BankAccountNumber'],
         ':TaxID' => $employeeDetail['TaxID'],
+    ]);
+
+    $employeeId = $pdo->lastInsertId();
+
+    // 3. Insert into Users
+    $username = "{$firstName}.{$lastName}";
+    $userStmt = $pdo->prepare("INSERT INTO Users (
+        Username, PasswordHash, Email, UserType
+    ) VALUES (
+        :Username, :PasswordHash, :Email, :UserType
+    )");
+
+    $userStmt->execute([
+        ':Username' => $username,
+        ':PasswordHash' => $hashedPassword,
+        ':Email' => $generatedEmail,
+        ':UserType' => 'user' // default role
+    ]);
+
+    // 4. Insert into Payroll
+    $payPeriodStart = date('Y-m-01');
+    $payPeriodEnd = date('Y-m-t');
+    $baseSalary = $employeeDetail['Salary'];
+
+    $payrollStmt = $pdo->prepare("INSERT INTO Payroll (
+        EmployeeID, PayPeriodStart, PayPeriodEnd, BaseSalary
+    ) VALUES (
+        :EmployeeID, :PayPeriodStart, :PayPeriodEnd, :BaseSalary
+    )");
+
+    $payrollStmt->execute([
+        ':EmployeeID' => $employeeId,
+        ':PayPeriodStart' => $payPeriodStart,
+        ':PayPeriodEnd' => $payPeriodEnd,
+        ':BaseSalary' => $baseSalary
     ]);
 }
 
@@ -81,18 +123,18 @@ function updateEmployee($pdo, $id, $employeeDetail)
     BankAccountNumber = :BankAccountNumber, TaxID = :TaxID
     WHERE EmployeeID = :id");
 
-$stmt->execute([
-    ':FirstName' => $employeeDetail['FirstName'],
-    ':LastName' => $employeeDetail['LastName'],
-    ':Email' => $employeeDetail['Email'],
-    ':Phone' => $employeeDetail['Phone'],
+    $stmt->execute([
+        ':FirstName' => $employeeDetail['FirstName'],
+        ':LastName' => $employeeDetail['LastName'],
+        ':Email' => $employeeDetail['Email'],
+        ':Phone' => $employeeDetail['Phone'],
         ':HireDate' => $employeeDetail['HireDate'],
         ':JobTitle' => $employeeDetail['JobTitle'],
         ':Department' => $employeeDetail['Department'],
         ':Salary' => $employeeDetail['Salary'],
         ':BankAccountNumber' => $employeeDetail['BankAccountNumber'],
         ':TaxID' => $employeeDetail['TaxID'],
-        ':id' => $id 
+        ':id' => $id
     ]);
 }
 

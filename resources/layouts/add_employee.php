@@ -1,12 +1,15 @@
 <?php
 
+echo"<h2>Add Employee</h2>";
+
 require __DIR__ . '../../../modules/employees/controller.php';
+include __DIR__ . '../../components/nav.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'add') {
     $employeeDetail = [
         'FirstName' => $_POST['FirstName'],
         'LastName' => $_POST['LastName'],
-        'Email' => $_POST['email'],
+        // 'Email' => $_POST['email'],
         'Phone' => $_POST['phone'],
         'HireDate' => $_POST['hireDate'],
         'JobTitle' => $_POST['jobTitle'],
@@ -19,15 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'add') {
 }
 ?>
 
-<h1>Add Employee</h1>
 
-<form action="add_employee.php" method="POST">
+<form action="" method="POST">
     <input type="text" name="FirstName" placeholder="Enter first name">
     <input type="text" name="LastName" placeholder="Enter last name">
-    <input type="email" name="email" placeholder="Enter email">
+    <!-- <input type="email" name="email" placeholder="Enter email"> -->
     <input type="tel" name="phone" placeholder="Enter phone number">
     <input type="text" name="jobTitle" placeholder="Enter job title">
-    <!-- <input type="text" name="department" placeholder="Enter department"> -->
     <select name="department" id="department">
         <option value="">-- Select Department --</option>
         <option value="hr">Human Resources</option>
