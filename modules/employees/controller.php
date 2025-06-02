@@ -56,7 +56,7 @@ function addEmployee($pdo, $employeeDetail)
     $rawPassword = "payroll@{$firstName}";
     $hashedPassword = password_hash($rawPassword, PASSWORD_BCRYPT);
 
-    // 2. Insert into Employees (with generated email)
+    // 2. Insert into Employees
     $stmt = $pdo->prepare("INSERT INTO Employees (
         FirstName, LastName, Email, Phone, HireDate, 
         JobTitle, Department, Salary, BankAccountNumber, TaxID
@@ -80,7 +80,11 @@ function addEmployee($pdo, $employeeDetail)
 
     $employeeId = $pdo->lastInsertId();
 
-    // 3. Insert into Users
+    // 3. Determine UserType based on Department
+    $department = strtolower($employeeDetail['Department']);
+    $userType = ($department === 'hr') ? 'admin' : 'user';
+
+    // 4. Insert into Users
     $username = "{$firstName}.{$lastName}";
     $userStmt = $pdo->prepare("INSERT INTO Users (
         Username, PasswordHash, Email, UserType
@@ -92,10 +96,10 @@ function addEmployee($pdo, $employeeDetail)
         ':Username' => $username,
         ':PasswordHash' => $hashedPassword,
         ':Email' => $generatedEmail,
-        ':UserType' => 'user' // default role
+        ':UserType' => $userType
     ]);
 
-    // 4. Insert into Payroll
+    // 5. Insert into Payroll
     $payPeriodStart = date('Y-m-01');
     $payPeriodEnd = date('Y-m-t');
     $baseSalary = $employeeDetail['Salary'];
@@ -113,6 +117,7 @@ function addEmployee($pdo, $employeeDetail)
         ':BaseSalary' => $baseSalary
     ]);
 }
+
 
 function updateEmployee($pdo, $id, $employeeDetail)
 {

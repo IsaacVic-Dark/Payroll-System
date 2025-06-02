@@ -5,4 +5,5 @@ require __DIR__ . '../../../routes/route.php';
     <button type="submit" name="page" value="home">Home</button>
     <button type="submit" name="page" value="employees">Employees</button>
     <button type="submit" name="page" value="leaves">Leaves</button>
+    <button type="submit" name="page" value="logout">Logout</button>
 </form>

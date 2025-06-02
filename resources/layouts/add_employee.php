@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '../../../middleware/check_auth.php';
 
 echo"<h2>Add Employee</h2>";
 
@@ -9,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'add') {
     $employeeDetail = [
         'FirstName' => $_POST['FirstName'],
         'LastName' => $_POST['LastName'],
-        // 'Email' => $_POST['email'],
         'Phone' => $_POST['phone'],
         'HireDate' => $_POST['hireDate'],
         'JobTitle' => $_POST['jobTitle'],
@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'add') {
 <form action="" method="POST">
     <input type="text" name="FirstName" placeholder="Enter first name">
     <input type="text" name="LastName" placeholder="Enter last name">
-    <!-- <input type="email" name="email" placeholder="Enter email"> -->
     <input type="tel" name="phone" placeholder="Enter phone number">
     <input type="text" name="jobTitle" placeholder="Enter job title">
     <select name="department" id="department">

@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '../../../middleware/check_auth.php';
 
 echo "<h2>Employee Profile</h2>";
 

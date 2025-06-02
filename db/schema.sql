@@ -43,6 +43,20 @@ CREATE TABLE Payroll (
     FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID) ON DELETE CASCADE
 );
 
+-- Notifications table
+CREATE TABLE notifications (
+    notificationID INT AUTO_INCREMENT PRIMARY KEY,
+    EmployeeID INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    type ENUM('salary', 'tax', 'leave', 'other') NOT NULL,
+    is_read BOOLEAN NOT NULL DEFAULT FALSE,
+    metadata JSON NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID) ON DELETE CASCADE
+);
+
 -- Deductions table
 CREATE TABLE Deductions (
     DeductionID INT AUTO_INCREMENT PRIMARY KEY,

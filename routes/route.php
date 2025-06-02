@@ -1,18 +1,25 @@
 <?php
 
-$path = '../resources/layouts/employees.php';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($_POST['page'] == 'home'){
+    $page = $_POST['page'] ?? '';
+
+    if ($page === 'logout') {
+        header("Location: /");
+        exit;
+    }
+
+    require_once __DIR__ . '../../middleware/check_auth.php';
+
+    if ($page === 'home') {
         header('Location: /resources/layouts/index.php');
         exit;
-    } elseif ($_POST['page'] == 'employees') {
+    } elseif ($page === 'employees') {
         header("Location: /resources/layouts/employees.php");
         exit;
-    } elseif ($_POST['page'] == 'leaves'){
+    } elseif ($page === 'leaves') {
         header("Location: /resources/layouts/leaves.php");
         exit;
-    } else { 
+    } else {
         echo "Page not found";
     }
 }

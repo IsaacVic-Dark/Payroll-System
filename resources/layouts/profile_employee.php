@@ -4,7 +4,9 @@ require __DIR__ . '../../../db/db.php';
 require __DIR__ . '../../../modules/employees/controller.php';
 require __DIR__ . '../../../modules/leave/controller.php';
 
-$id = 26;
+session_start();
+$id = $_SESSION['user']['UserID'];
+
 
 $employee = fetchEmployeeById($pdo, $id);
 

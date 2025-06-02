@@ -1,8 +1,9 @@
 <?php 
+require_once __DIR__ . '../../../middleware/check_auth.php';
+
 echo "<h2>Employees</h2>";
 
 require __DIR__ . '../../../modules/employees/controller.php';
-
 include __DIR__ . '../../components/nav.php';
 
 $employees = [];
