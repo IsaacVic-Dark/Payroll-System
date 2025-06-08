@@ -2,6 +2,7 @@
 
 require __DIR__ . '../../../db/db.php';
 require_once __DIR__ . '../../../helper/helper.php';
+require_once __DIR__ . '../../deductions/tax.php';
 
 function fetchAllEmployees($pdo)
 {
@@ -48,6 +49,7 @@ function deleteEmployeeByID($pdo, $id)
 
 function addEmployee($pdo, $employeeDetail)
 {
+
     // 1. Generate Email and Password
     $domain = 'payroll.com';
     $firstName = strtolower($employeeDetail['FirstName']);

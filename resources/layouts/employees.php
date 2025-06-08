@@ -32,6 +32,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif(isset($_POST['action']) && $_POST['action'] == 'add'){
         header('Location: add_employee.php');
         exit();
+    } elseif(isset($_POST['action']) && $_POST['action'] == 'payslip'){
+        header('Location: ../../../includes/generate_payslip.php');
+        exit();
     }elseif(isset($_POST['action']) && $_POST['action'] == 'edit'){
         $employeeId = $_POST['id'];
         header("Location: edit_employee.php?id=$employeeId");
@@ -70,10 +73,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <form action="employees.php" method="POST">
                             <input type="text" name="id" value="<?= $employee['EmployeeID'] ?>" hidden>
                             <button type="submit" name="action" value="edit">Edit</button>
-                        </form>
-                        <form action="employees.php" method="POST">
-                            <input type="text" name="id" value="<?= $employee['EmployeeID'] ?>" hidden>
                             <button type="submit" name="action" value="delete">Delete</button>
+                            <button type="submit" name="action" value="payslip">payslip</button>
                         </form>
                     </td>
                 </tr>

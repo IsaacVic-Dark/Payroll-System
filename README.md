@@ -33,7 +33,20 @@ The system uses a well-structured relational database with the following tables:
    ```  
 2. Set up the database (`MySQL` or `PostgreSQL`).  
 3. Run migrations to create tables.  
-4. Start the application.  
+4. Start the application. 
+
+## 📦 TCPDF Installation
+1. To set up TCPDF in this project, follow the steps below:
+
+2. Install project dependencies (including TCPDF if already listed in composer.json):
+
+   ```sh
+      composer install
+   ```
+3. If TCPDF is not already included, add it manually using Composer:
+   ```sh
+      composer require tecnickcom/tcpdf
+   ```
 
 ## 🤝 Contributing  
 Contributions are welcome! Feel free to open an issue or submit a pull request.  
