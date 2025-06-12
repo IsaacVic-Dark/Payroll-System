@@ -1,10 +1,11 @@
 <?php
 
+require __DIR__ . '../../../middleware/check_auth.php';
+
 require __DIR__ . '../../../db/db.php';
 require __DIR__ . '../../../modules/employees/controller.php';
 require __DIR__ . '../../../modules/leave/controller.php';
 
-session_start();
 $id = $_SESSION['user']['UserID'];
 
 include __DIR__ . '../../components/nav.php';

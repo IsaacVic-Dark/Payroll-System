@@ -1,6 +1,14 @@
 <?php
+require __DIR__.'/../../../routes/functions.php';
 session_start();
+
+
 session_unset();
-session_destroy();   
-header('Location: /signin.php');
-exit;
+$_SESSION = [];
+session_destroy();
+
+// dd($_SESSION);
+
+header('Location: /resources/pages/auth/signin.php');
+exit();
+ 

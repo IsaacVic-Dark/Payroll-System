@@ -4,7 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $page = $_POST['page'] ?? '';
 
     if ($page === 'logout') {
-        header("Location: /");
+        require_once __DIR__ . '/../resources/pages/auth/logout.php';
         exit;
     }
 
