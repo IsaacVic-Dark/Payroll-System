@@ -1,8 +1,8 @@
 <?php 
 
-require 'C:\laragon\www\payroll_system\db\db.php';
+require __DIR__ . '/../../database/db.php';
 
-require_once __DIR__ . '../../../helper/helper.php';
+require_once __DIR__ . '../../../core/helper.php';
 
 
 /**

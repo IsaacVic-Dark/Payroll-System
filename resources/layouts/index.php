@@ -1,10 +1,9 @@
 <?php 
 
-require_once __DIR__ . '../../../middleware/check_auth.php';
+require_once __DIR__ . '/../../app/Middleware/check_auth.php';
+require __DIR__ . '/../../database/db.php';
 
 echo "<h2>Home Page</h2>";
-
-require __DIR__ . '../../../db/db.php';
 
 $countEmployees = $pdo->query("SELECT COUNT(*) FROM employees")->fetchColumn();
 $countLeaves = $pdo->query("SELECT COUNT(*) FROM leaves")->fetchColumn();

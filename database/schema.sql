@@ -11,6 +11,61 @@ CREATE TABLE Users (
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Pay Run Table for Kenyan Payroll System
+CREATE TABLE payruns (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    payrun_name VARCHAR(100) NOT NULL,
+    pay_period_start DATE NOT NULL,
+    pay_period_end DATE NOT NULL,
+    pay_frequency ENUM('weekly', 'bi-weekly', 'monthly') NOT NULL DEFAULT 'monthly',
+    status ENUM('draft', 'reviewed', 'finalized') NOT NULL DEFAULT 'draft',
+    total_gross_pay DECIMAL(15,2) DEFAULT 0.00,
+    total_deductions DECIMAL(15,2) DEFAULT 0.00,
+    total_net_pay DECIMAL(15,2) DEFAULT 0.00,
+    employee_count INT DEFAULT 0,
+    created_by INT NOT NULL,
+    reviewed_by INT NULL,
+    finalized_by INT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    reviewed_at TIMESTAMP NULL,
+    finalized_at TIMESTAMP NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (created_by) REFERENCES users(UserID),
+    FOREIGN KEY (reviewed_by) REFERENCES users(UserID),
+    FOREIGN KEY (finalized_by) REFERENCES users(UserID),
+    
+    INDEX idx_payrun_period (pay_period_start, pay_period_end),
+    INDEX idx_payrun_status (status),
+    INDEX idx_payrun_frequency (pay_frequency)
+);
+
+-- Pay Run Details Table (stores individual employee calculations)
+CREATE TABLE payrun_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    payrun_id INT NOT NULL,
+    employee_id INT NOT NULL,
+    basic_salary DECIMAL(15,2) NOT NULL,
+    overtime_amount DECIMAL(15,2) DEFAULT 0.00,
+    bonus_amount DECIMAL(15,2) DEFAULT 0.00,
+    commission_amount DECIMAL(15,2) DEFAULT 0.00,
+    gross_pay DECIMAL(15,2) NOT NULL,
+    paye_tax DECIMAL(15,2) DEFAULT 0.00,
+    nhif_deduction DECIMAL(15,2) DEFAULT 0.00,
+    nssf_deduction DECIMAL(15,2) DEFAULT 0.00,
+    housing_levy DECIMAL(15,2) DEFAULT 0.00,
+    other_deductions DECIMAL(15,2) DEFAULT 0.00,
+    total_deductions DECIMAL(15,2) NOT NULL,
+    net_pay DECIMAL(15,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (payrun_id) REFERENCES payruns(id) ON DELETE CASCADE,
+    FOREIGN KEY (employee_id) REFERENCES employees(EmployeeID),
+    
+    UNIQUE KEY unique_payrun_employee (payrun_id, employee_id),
+    INDEX idx_payrun_details_employee (employee_id)
+);
+
 -- Employees table
 CREATE TABLE Employees (
     EmployeeID INT AUTO_INCREMENT PRIMARY KEY,

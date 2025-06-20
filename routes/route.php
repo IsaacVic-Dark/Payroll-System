@@ -1,5 +1,7 @@
 <?php
 
+use App\Controllers\PagesController;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $page = $_POST['page'] ?? '';
 
@@ -8,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    require_once __DIR__ . '../../middleware/check_auth.php';
+    require_once __DIR__ . '/../app/Middleware/check_auth.php';
 
     if ($page === 'home') {
         header('Location: /resources/layouts/index.php');
@@ -18,6 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } elseif ($page === 'leaves') {
         header("Location: /resources/layouts/leaves.php");
+        exit;
+    } elseif ($page === 'payrun') {
+        header("Location: /resources/pages/payrun.php");
         exit;
     } else {
         echo "Page not found";

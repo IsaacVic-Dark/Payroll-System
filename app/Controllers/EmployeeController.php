@@ -1,8 +1,8 @@
 <?php
 
-require __DIR__ . '../../../db/db.php';
-require_once __DIR__ . '../../../helper/helper.php';
-require_once __DIR__ . '../../deductions/tax.php';
+require __DIR__ . '/../../database/db.php';
+require_once __DIR__ . '../../../core/helper.php';
+require_once __DIR__ . '/../../app/Logic/tax.php';
 
 function fetchAllEmployees($pdo)
 {

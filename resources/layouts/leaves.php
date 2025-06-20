@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . '../../../middleware/check_auth.php';
+require_once __DIR__ . '/../../app/Middleware/check_auth.php';
 
 echo"<h2>Leave Managment</h2>";
 
-require __DIR__ . '../../../modules/leave/controller.php';
-require __DIR__ . '../../../modules/employees/controller.php';
+require __DIR__ . '/../../app/Controllers/LeaveController.php';
+require __DIR__ . '/../../app/Controllers/EmployeeController.php';
 
 include __DIR__ . '../../components/nav.php';
 

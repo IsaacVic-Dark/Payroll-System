@@ -1,5 +1,6 @@
 <?php
 
+
 class PaginationHelper
 {
     public static function getPagination($params)
